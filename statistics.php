@@ -1,6 +1,54 @@
 <?php
 
 require_once __DIR__ . '/src/Api/sessionValidation.php';
+require_once __DIR__ . '/src/Repository/MediaRepository.php';
+require_once __DIR__ . '/src/Service/Database.php';
+
+$mediaRepository = new MediaRepository();
+
+$connection = Database::getConnection();
+
+$allTime = $connection->query('SELECT COUNT(`id`) FROM `borrowed`;')->fetch()[0];
+
+$mostBorrowed = $connection->query(
+        'SELECT `media_id`, COUNT(*) AS `borrow_count` FROM `borrowed` GROUP BY `media_id` ORDER BY `borrow_count` DESC LIMIT 3; '
+)->fetchAll(PDO::FETCH_ASSOC);
+
+
+$allMonthEntries = $connection->query(
+        'SELECT 
+                    MONTH(FROM_UNIXTIME(`timestamp`)) AS month,
+                    COUNT(*) AS entry_count
+                FROM 
+                    borrowed
+                WHERE 
+                    YEAR(FROM_UNIXTIME(`timestamp`)) = YEAR(CURRENT_DATE)
+                GROUP BY 
+                    month
+                ORDER BY 
+                    month;
+                '
+)->fetchAll(PDO::FETCH_ASSOC);
+$diagrammDataArray = [
+    1 => 0,
+    2 => 0,
+    3 => 0,
+    4 => 0,
+    5 => 0,
+    6 => 0,
+    7 => 0,
+    8 => 0,
+    9 => 0,
+    10 => 0,
+    11 => 0,
+    12 => 0,
+];
+
+foreach ($allMonthEntries as $monthEntry) {
+    $diagrammDataArray[$monthEntry['month']] = $monthEntry['entry_count'];
+}
+
+$diagrammData = implode(', ', $diagrammDataArray);
 
 ?>
 
@@ -26,15 +74,18 @@ require_once __DIR__ . '/src/Api/sessionValidation.php';
                 <div class="statistics">
                     <div class="statistics-item">
                         <h2>Ausleihvorgänge</h2>
-                        <p>Gesamtanzahl der Ausleihvorgänge: 100</p>
-                        <p>Durchschnittliche Ausleihdauer: 7 Tage</p>
+                        <p>Gesamtanzahl der Ausleihvorgänge: <?= $allTime ?></p>
                     </div>
                     <div class="statistics-item">
                         <h2>Beliebte Medien</h2>
                         <ul>
-                            <li>Medium 1: 20 Ausleihen</li>
-                            <li>Medium 2: 15 Ausleihen</li>
-                            <li>Medium 3: 12 Ausleihen</li>
+                            <?php
+                                foreach ($mostBorrowed as $borrowed) {
+                                    $media = $mediaRepository->getById($borrowed['media_id']);
+
+                                    echo '<li>' . $media->getTitle() . ': ' . $borrowed['borrow_count'] . ' Ausleihen</li>';
+                                }
+                            ?>
                         </ul>
                     </div>
                 </div>
@@ -58,7 +109,7 @@ require_once __DIR__ . '/src/Api/sessionValidation.php';
                     ],
                     datasets: [{
                         label: 'Anzahl der Ausleihen pro Monat',
-                        data: [12, 30, 3, 5, 2, 3, 34, 5 ,6, 7,8 ,9,9],
+                        data: [<?= $diagrammData ?>],
                         backgroundColor: [
                             'rgba(255, 99, 132, 0.2)',
                             'rgba(54, 162, 235, 0.2)',

@@ -14,7 +14,7 @@ $userRepository = new UserRepository();
 
 $currentUser = $userRepository->getById($_SESSION['user_id']);
 $currentMedia = (new MediaRepository())->getById($_GET['id']);
-$currentBorrowed = (new BorrowedRepository())->getByMediaId($_GET['id']);
+$currentBorrowed = (new BorrowedRepository())->getByMediaIdAndActive($_GET['id']);
 
 $borrowedUser = '';
 

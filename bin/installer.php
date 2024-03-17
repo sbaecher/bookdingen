@@ -32,6 +32,7 @@ $borrowed = 'CREATE TABLE IF NOT EXISTS borrowed (
     user_id INT NOT NULL,
     media_id INT NOT NULL,
     timestamp INT NOT NULL,
+    active BOOLEAN NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (media_id) REFERENCES media(id)
 );';

@@ -6,6 +6,7 @@ class Borrowed
     private int $userId;
     private int $mediaId;
     private int $timestamp;
+    private bool $active;
 
     /**
      * @return int
@@ -69,5 +70,21 @@ class Borrowed
     public function setTimestamp(int $timestamp): void
     {
         $this->timestamp = $timestamp;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isActive(): bool
+    {
+        return $this->active;
+    }
+
+    /**
+     * @param bool $active
+     */
+    public function setActive(bool $active): void
+    {
+        $this->active = $active;
     }
 }

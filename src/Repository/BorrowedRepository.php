@@ -18,6 +18,28 @@ class BorrowedRepository extends AbstractRepository
         ]);
     }
 
+    public function getByMediaIdAndActive(int $id): ?Borrowed
+    {
+        $stmt = $this->connection->prepare(
+            'SELECT * FROM borrowed WHERE `media_id` = ? AND `active` = 1'
+        );
+        $stmt->execute([$id]);
+        $borrowedData = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$borrowedData) {
+            return null;
+        }
+
+        $borrowed = new Borrowed();
+        $borrowed->setId($borrowedData['id']);
+        $borrowed->setUserId($borrowedData['user_id']);
+        $borrowed->setMediaId($borrowedData['media_id']);
+        $borrowed->setTimestamp($borrowedData['timestamp']);
+        $borrowed->setActive((bool) $borrowedData['active']);
+
+        return $borrowed;
+    }
+
     public function getByMediaId(int $id): ?Borrowed
     {
         $stmt = $this->connection->prepare(
@@ -35,16 +57,23 @@ class BorrowedRepository extends AbstractRepository
         $borrowed->setUserId($borrowedData['user_id']);
         $borrowed->setMediaId($borrowedData['media_id']);
         $borrowed->setTimestamp($borrowedData['timestamp']);
+        $borrowed->setActive((bool) $borrowedData['active']);
 
         return $borrowed;
     }
 
-    public function delete(int $id): bool
+    public function update(Borrowed $borrowed): bool
     {
         $stmt = $this->connection->prepare(
-            'DELETE FROM borrowed WHERE  `id` = ?'
+            'UPDATE borrowed SET `user_id` = ?, `media_id` = ?, `timestamp` = ?, `active` = ? WHERE `id` = ?'
         );
 
-        return $stmt->execute([$id]);
+        return $stmt->execute([
+            $borrowed->getUserId(),
+            $borrowed->getMediaId(),
+            $borrowed->getTimestamp(),
+            (int) $borrowed->isActive(),
+            $borrowed->getId()
+        ]);
     }
 }

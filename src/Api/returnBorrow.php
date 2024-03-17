@@ -12,6 +12,7 @@ include_once __DIR__ . '/../Entity/Borrowed.php';
 
 $borrowedRepository = new BorrowedRepository();
 
-$borrowed = $borrowedRepository->getByMediaId($_GET['media_id']);
+$borrowed = $borrowedRepository->getByMediaIdAndActive($_GET['media_id']);
+$borrowed->setActive(false);
 
-$borrowedRepository->delete($borrowed->getId());
+$borrowedRepository->update($borrowed);
