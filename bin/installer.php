@@ -18,6 +18,9 @@ $usersStatement = 'CREATE TABLE IF NOT EXISTS users (
 
 $usersStatement .= 'ALTER TABLE `users` ADD `role` VARCHAR(50) NOT NULL DEFAULT "user" AFTER `password`; ';
 
+$usersStatement .= "INSERT INTO `users` (`id`, `full_name`, `user_name`, `email`, `password`, `role`) VALUES
+(2, 'admin', 'Admin', 'admin@sascha-baecher.dev', '$2y$10$upCEELMUFNXipSphYaaNJ.BdpWL1q9a4WyJQ0s.MnHlNRFRWjBxzC', 'user');";
+
 $mediumStatement = 'CREATE TABLE IF NOT EXISTS media (
     id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,

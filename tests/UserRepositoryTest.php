@@ -1,8 +1,8 @@
 <?php
 
-include_once 'TestingInterface.php';
-include_once '../src/Repository/UserRepository.php';
-include_once '../src/Entity/User.php';
+include_once __DIR__ . '/TestingInterface.php';
+include_once __DIR__ . '/../src/Repository/UserRepository.php';
+include_once __DIR__ . '/../src/Entity/User.php';
 
 class UserRepositoryTest implements TestingInterface
 {
@@ -80,7 +80,7 @@ class UserRepositoryTest implements TestingInterface
     {
         $testUser = $this->userRepository->getByEmail('testuser@sascha-baecher.dev');
 
-        if (empty($this->testUser)) {
+        if (empty($testUser)) {
             return false;
         }
 
