@@ -4,8 +4,7 @@ Installation
 3. Hinzufügen der Datenbank "libraryManagementSoftware"
 4. Hinzufügen des Users "libraryManagementSoftware" Passwort "rUhs3skNn)7vqG@r"
 5. Ausführen -> "php8.2 bin/installer.php"
-6. Ausführen -> "wget https://getcomposer.org/download/2.7.2/composer.phar"
-7. Ausführen -> "php8.2 composer.phar install"
+6. Um das Testing Auszuführen -> "php8.2 tests/Testing.php"
 
 Anmeldedaten als Admin:
 Email -> admin@sascha-baecher.dev
