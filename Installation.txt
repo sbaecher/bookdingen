@@ -1,0 +1,11 @@
+Installation
+1. Ordern in Xampp oder einem jeweiligen Server hinterlegen
+2. Vhost auf den Ordner richten mit php8.2
+3. Hinzufügen der Datenbank "libraryManagementSoftware"
+4. Hinzufügen des Users "libraryManagementSoftware" Passwort "rUhs3skNn)7vqG@r"
+5. Ausführen -> "php8.2 bin/installer.php"
+6. Um das Testing Auszuführen -> "php8.2 tests/Testing.php"
+
+Anmeldedaten als Admin:
+Email -> admin@sascha-baecher.dev
+Password -> 7#yz6>S9_2P@mRb
