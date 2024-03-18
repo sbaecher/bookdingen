@@ -4,7 +4,6 @@ require_once __DIR__ . '/src/Api/login.php';
 
 ?>
 
-<!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="UTF-8">

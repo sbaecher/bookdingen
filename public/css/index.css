@@ -83,6 +83,7 @@ h2 {
 }
 
 h3 {
+    width: max-content;
     font-size: 18px;
     color: #333;
     margin-bottom: 5px;

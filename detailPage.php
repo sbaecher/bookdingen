@@ -47,7 +47,7 @@ if (!empty($currentBorrowed)) {
                     <p><strong>Autor:</strong> <?= $currentMedia->getAuthor() ?> </p>
                     <p><strong>Kategorie:</strong> <?= $currentMedia->getCategory() ?> </p>
                     <p><strong>ISBN/ISSN:</strong> <?= $currentMedia->getMediaCode() ?> </p>
-                    <p><strong>Beschreibung:</strong> <?= $currentMedia->getMediaCode() ?> </p>
+                    <p><strong>Beschreibung:</strong> <?= $currentMedia->getDescription() ?> </p>
                 </div>
         
                 <div class="media-actions">
@@ -68,6 +68,8 @@ if (!empty($currentBorrowed)) {
     </div>
 </body>
 <script>
+console.log('asdasd');
+
     function borrow(userId, mediaId) {
         fetch(`/src/Api/borrow.php?user_id=${userId}&media_id=${mediaId}`)
             .then(() => {

@@ -37,6 +37,8 @@ $borrowed = 'CREATE TABLE IF NOT EXISTS borrowed (
     FOREIGN KEY (media_id) REFERENCES media(id)
 );';
 
+$borrowed .= "ALTER TABLE `borrowed` CHANGE `active` `active` TINYINT(1) NOT NULL DEFAULT '1';";
+
 $errorCode = $connection->exec(implode('', [
     $usersStatement,
     $mediumStatement,
